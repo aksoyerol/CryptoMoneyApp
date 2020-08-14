@@ -4,10 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.erolaksoy.studycryptomoneyapp.model.CryptoModel
 
-class MySingleRowAdapter(val cryptoListModel : List<CryptoModel>) : RecyclerView.Adapter<MyViewHolder>(){
+class MySingleRowAdapter(private val cryptoListModel : ArrayList<CryptoModel>) : RecyclerView.Adapter<MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        TODO("Not yet implemented")
+        return MyViewHolder(parent)
     }
 
     override fun getItemCount(): Int {
@@ -15,7 +15,8 @@ class MySingleRowAdapter(val cryptoListModel : List<CryptoModel>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindData(cryptoListModel[position])
+        val colors :Array<String> = arrayOf("#FFA07A","#1874CD","#efefef","#3B5323","#8A3324")
+        holder.bindData(cryptoListModel[position],colors,position)
     }
 
 }

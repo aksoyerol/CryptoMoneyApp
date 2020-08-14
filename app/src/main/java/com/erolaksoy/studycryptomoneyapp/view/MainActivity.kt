@@ -2,10 +2,14 @@ package com.erolaksoy.studycryptomoneyapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.erolaksoy.studycryptomoneyapp.R
+import com.erolaksoy.studycryptomoneyapp.adapter.MySingleRowAdapter
 import com.erolaksoy.studycryptomoneyapp.model.CryptoModel
 import com.erolaksoy.studycryptomoneyapp.service.CryptoManager
 import com.erolaksoy.studycryptomoneyapp.service.ICryptoApi
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,19 +19,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.nomics.com/v1/"
-    private var cryptoModels : List<CryptoModel>? = null
+    private var cryptoModels : ArrayList<CryptoModel>? = null
+    private var recyclerViewAdapter : MySingleRowAdapter?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        val cryptoManager = CryptoManager()
-//        val itemList = cryptoManager.getData()
+
+        //Recycler view oluşturma, layout Manager ile recyler view kontrol edecğeiz
+//        val linearLayout = LinearLayoutManager(this)
+//        linearLayout.orientation = LinearLayoutManager.VERTICAL
+//        var myRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+//        myRecyclerView.layoutManager = linearLayout
 //
-//        if(itemList!=null){
-//        for(item : CryptoModel in itemList!!){
-//            println(item.price)
-//            println(item.currency)
-//        }
-//        }
+        var layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this@MainActivity)
+        recyclerView.layoutManager = layoutManager
         loadData()
     }
 
@@ -49,6 +55,10 @@ class MainActivity : AppCompatActivity() {
                     response.body()?.let {
                         cryptoModels = ArrayList(it)
 
+                            recyclerViewAdapter = MySingleRowAdapter(cryptoModels!!)
+                            recyclerView.adapter = recyclerViewAdapter
+
+
                         for (item : CryptoModel in cryptoModels!!) {
                         println(item.currency)
                             println(item.price)
@@ -56,8 +66,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-
         })
     }
 }
