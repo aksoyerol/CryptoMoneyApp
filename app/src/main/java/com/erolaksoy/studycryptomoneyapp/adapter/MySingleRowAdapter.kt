@@ -9,6 +9,7 @@ class MySingleRowAdapter(private val cryptoListModel : ArrayList<CryptoModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(parent)
     }
+    //////////////////////
 
     override fun getItemCount(): Int {
         return cryptoListModel.size
